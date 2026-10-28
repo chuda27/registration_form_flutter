@@ -724,8 +724,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       },
                     ),
                   ),
-
-                  (Container(
+                  Container(
                     margin: const EdgeInsets.fromLTRB(10, 20, 10, 5),
                     height: 60,
                     width: double.infinity,
@@ -759,7 +758,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           borderRadius: BorderRadius.circular(16),
                         ),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formRegistration.currentState!.validate()) {
                           // Lakukan proses registrasi di sini
                           User user = User(
@@ -769,10 +768,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             user_gender: _selectedGender,
                             user_password: passwordController.text,
                           );
-
-                          //submit data ke server
-                          UserRequest submitUser =
-                              registerUser(user) as UserRequest;
+                          UserRequest submitUser = await registerUser(user);
                           if (submitUser.code == 200) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
@@ -841,7 +837,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         style: TextStyle(color: Colors.white, fontSize: 25),
                       ),
                     ),
-                  )),
+                  ),
                 ],
               ),
             ),

@@ -3,6 +3,7 @@ import 'registration/register_page.dart';
 import 'helpers/shared_prefs_service.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await SharedPrefsService.init();
   runApp(const MyApp());
 }
