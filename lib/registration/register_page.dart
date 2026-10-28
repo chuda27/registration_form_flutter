@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:registration_flutter/api/user_request.dart';
 import '../models/user.dart';
 import 'package:registration_flutter/constant.dart' as constant;
 import 'package:http/http.dart' as http;
 import 'package:registration_flutter/helpers/shared_prefs_service.dart';
+import 'login_page.dart';
 
 enum DialogType { error, warning, success }
 
@@ -31,7 +31,6 @@ class _RegisterPageState extends State<RegisterPage> {
   bool _isConfirmPasswordVisible = true;
   String _selectedGender = '';
   final List<String> _genderOptions = ['Laki-laki', 'Perempuan'];
-  bool _isLoading = false;
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -163,7 +162,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     constant.Constant.KEY_IP_PREFERENCE,
                     basedURLInput,
                   );
-                  print('Data berhasil disimpan: $basedURLInput');
                 } // Bersihkan controller
                 Navigator.of(context).pop(); // Tutup dialog
               },
@@ -184,9 +182,6 @@ class _RegisterPageState extends State<RegisterPage> {
         title: 'IP Kosong',
         content: 'IP tidak ditemukan. Silakan atur IP server terlebih dahulu!',
         type: DialogType.error,
-        onConfirm: () {
-          print('User menekan OK pada dialog Error');
-        },
       );
 
       return Future.error(
@@ -475,7 +470,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     alignment: Alignment.center,
                     padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                     child: DropdownButtonFormField<String>(
-                      value: _selectedGender.isNotEmpty
+                      initialValue: _selectedGender.isNotEmpty
                           ? _selectedGender
                           : null,
                       items: _genderOptions.map((String gender) {
@@ -837,6 +832,34 @@ class _RegisterPageState extends State<RegisterPage> {
                         style: TextStyle(color: Colors.white, fontSize: 25),
                       ),
                     ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Jika sudah daftar, ',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  LoginPage(title: 'Halaman Login'),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          'Login!',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
