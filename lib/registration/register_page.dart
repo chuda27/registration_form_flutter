@@ -769,7 +769,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             user_password: passwordController.text,
                           );
                           UserRequest submitUser = await registerUser(user);
-                          if (submitUser.code == 200) {
+                          if (submitUser.code == 201) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
@@ -803,7 +803,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
-                                  'Registrasi gagal. Silakan coba lagi.',
+                                  'Registrasi gagal! ${submitUser.status}',
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
